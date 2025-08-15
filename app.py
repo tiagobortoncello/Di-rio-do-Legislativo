@@ -6,7 +6,7 @@ from PyPDF2 import PdfReader
 import io
 
 def run_app():
-    # --- Custom CSS para centralizar e adicionar fundo ao título ---
+    # --- Custom CSS para estilizar os títulos ---
     st.markdown("""
         <style>
         .title-container {
@@ -17,27 +17,31 @@ def run_app():
             margin-bottom: 20px;
         }
         .main-title {
-            color: #d11a2a;  /* Vermelho suave (pode ajustar a cor) */
-            font-size: 2.5em;
+            color: #d11a2a;  /* Vermelho suave */
+            font-size: 3em;  /* Aumentando o tamanho da fonte para o título principal */
             font-weight: bold;
+            margin-bottom: 0;
+        }
+        .subtitle-gil {
+            color: gray;  /* Cinza para o subtítulo */
+            font-size: 1.5em; /* Aumentando o tamanho da fonte para o subtítulo */
+            margin-top: 5px;
         }
         </style>
     """, unsafe_allow_html=True)
-    
+
     # --- Título e informações para o usuário ---
     # Usando o contêiner com as classes CSS personalizadas
     st.markdown("""
         <div class="title-container">
-            <p class="main-title">Extrator de Documentos do Diário do Legislativo</p>
+            <h1 class="main-title">Extrator de Documentos do Diário do Legislativo</h1>
+            <h4 class="subtitle-gil">GERÊNCIA DE INFORMAÇÃO LEGISLATIVA - GIL/GDI</h4>
         </div>
     """, unsafe_allow_html=True)
     
-    # Referência à GIL/GDI em cinza, mantida abaixo do título principal
-    st.markdown("<h4 style='text-align: center; color: gray;'>GERÊNCIA DE INFORMAÇÃO LEGISLATIVA - GIL/GDI</h4>", unsafe_allow_html=True)
-    
     st.divider()
 
-    # Instrução para o usuário em vermelho suave
+    # Instrução para o usuário
     st.markdown("<p style='font-size: 1.1em; color: firebrick;'>Por favor, faça o upload do arquivo PDF do **Diário do Legislativo**.</p>", unsafe_allow_html=True)
     
     # --- Upload do PDF ---
