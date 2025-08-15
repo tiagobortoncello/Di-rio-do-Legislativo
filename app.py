@@ -6,10 +6,33 @@ from PyPDF2 import PdfReader
 import io
 
 def run_app():
-    # --- Título e informações para o usuário ---
-    st.title("Extrator de Documentos do Diário do Legislativo")
+    # --- Custom CSS para centralizar e adicionar fundo ao título ---
+    st.markdown("""
+        <style>
+        .title-container {
+            text-align: center;
+            background-color: #f0f0f0;  /* Cinza claro para o fundo */
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        .main-title {
+            color: #d11a2a;  /* Vermelho suave (pode ajustar a cor) */
+            font-size: 2.5em;
+            font-weight: bold;
+        }
+        </style>
+    """, unsafe_allow_html=True)
     
-    # Referência à GIL/GDI em cinza
+    # --- Título e informações para o usuário ---
+    # Usando o contêiner com as classes CSS personalizadas
+    st.markdown("""
+        <div class="title-container">
+            <p class="main-title">Extrator de Documentos do Diário do Legislativo</p>
+        </div>
+    """, unsafe_allow_html=True)
+    
+    # Referência à GIL/GDI em cinza, mantida abaixo do título principal
     st.markdown("<h4 style='text-align: center; color: gray;'>GERÊNCIA DE INFORMAÇÃO LEGISLATIVA - GIL/GDI</h4>", unsafe_allow_html=True)
     
     st.divider()
@@ -40,7 +63,6 @@ def run_app():
         
         st.success("PDF lido com sucesso! O processamento começou.")
         
-        # Cria um spinner para mostrar que o processamento está em andamento
         with st.spinner('Extraindo dados...'):
             # ==========================
             # ABA 1: Normas
@@ -202,7 +224,6 @@ def run_app():
         # ==========================
         # SALVAR TODAS AS ABAS NO MESMO EXCEL e criar o botão de download
         # ==========================
-        # Cria um buffer de memória para o arquivo Excel
         output = io.BytesIO()
         excel_file_name = "resultado_extraido.xlsx"
         
@@ -212,10 +233,8 @@ def run_app():
             df_requerimentos.to_excel(writer, sheet_name="Requerimentos", index=False, header=False)
             df_pareceres.to_excel(writer, sheet_name="Pareceres", index=False, header=False)
         
-        # Volta o ponteiro do buffer para o início
         output.seek(0)
 
-        # Botão de download
         st.download_button(
             label="Clique aqui para baixar o arquivo Excel",
             data=output,
